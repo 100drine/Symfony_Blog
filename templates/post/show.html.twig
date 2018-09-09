@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{post.title}}{% endblock %}
+
+{% block body %}
+    
+    <h1>{{ post.title }}</h1>
+    <h2>{{ post.author }}</h2>
+    <p>{{ post.content }}</p>
+    <p>Created at: {{ post.createdAt|date('Y-m-d') }}</p>
+    {% if  post.updatedAt %}
+        <p>Updated at: {{ post.updatedAt|date('Y-m-d') }}</p>
+    {% endif %}
+    <hr>
+    <a href="/">Go Back</a>
+    <hr>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    <hr>
+    {% for comment in comments %}
+        <div class="card">
+            <div class="card-body">
+                <h4>{{ comment.author }}</h4>
+                <p>{{ comment.content }}</p>
+                <p>{{ comment.createdAt|date('Y-m-d') }}</p>
+                <a href="/post/{{post.id}}/delete/{{comment.id}}" class="btn btn-danger delete-post" data-id="{{ comment.id }}" >Delete</a>
+            </div>
+        </div>
+
+    {% endfor %}
+
+{% endblock %}
